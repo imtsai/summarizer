@@ -16,7 +16,7 @@ public class SentenceBoundary {
     static final SentenceModel SENTENCE_MODEL  = new MedlineSentenceModel();
     static final ArrayList<sentenceObject> sentenceList = new ArrayList<sentenceObject>();
 
-    public static ArrayList<sentenceObject> makeSentences(String input, String title) {
+    public static ArrayList<sentenceObject> makeSentences(String input) {
     	File file = new File(input);
     	String text = null;
 		try {
@@ -52,11 +52,8 @@ public class SentenceBoundary {
     	    }
         	currSen.append("\n");
 
-        	if (!currSen.toString().contains(title)) {
-//        		System.out.println(currSen + "not in title");
-        		sentenceObject currSentenceObject = new sentenceObject(currSen.toString(), i);
-            	sentenceList.add(currSentenceObject);
-        	}
+        	sentenceObject currSentenceObject = new sentenceObject(currSen.toString(), i);
+           	sentenceList.add(currSentenceObject);
     	    sentStartTok = sentEndTok+1;
     	}    
     return sentenceList;

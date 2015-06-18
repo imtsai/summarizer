@@ -25,7 +25,6 @@ import com.aliasi.tokenizer.Tokenizer;
 
 public class initializer{
 	public static String title;
-	public static String header;
 
 	public static ArrayList<sentenceObject> doc = new ArrayList<sentenceObject>();
 	public static HashMap<String, ArrayList<index>> data = new HashMap<String, ArrayList<index>>();
@@ -34,15 +33,15 @@ public class initializer{
     public static ArrayList<index> sentenceStarts = new ArrayList<index>();
 
 	public static void main(String [ ] args) throws FileNotFoundException{
-		if (args[2]!=null) {
-			title = args[2];
-		}
-		if (args[1]!=null) {
-			header = args[1];
+		try {
+			if (args[1]!=null) {
+				title = args[1];
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			
 		}
 		if (args[0] != null) {
 			read(args[0]);
-
 		} else {
 			throw new FileNotFoundException();
 		}
@@ -61,7 +60,7 @@ public class initializer{
 		    writer = new BufferedWriter( new FileWriter("temp.txt"));
 		    writer.write(textOfPdf);
 	        writer.close();
-	        doc = SentenceBoundary.makeSentences("temp.txt", header);
+	        doc = SentenceBoundary.makeSentences("temp.txt");
 //	        printDoc();
 		    getWordCount(doc);
 	        sorted_data = sortByCount(data);
@@ -99,9 +98,6 @@ public class initializer{
             	String currSentence = doc.get(currOcurrence-1).line;
     			if (currSentence.contains(title)) {
     				currSentence = currSentence.replaceAll(title, "");
-            	}
-    			if (currSentence.contains(header)) {
-    				currSentence = currSentence.replaceAll(header, "");
             	}
     			if (sentenceHolder[currOcurrence]==null) {
                 	sentenceHolder[currOcurrence] = currSentence;
